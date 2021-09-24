@@ -1,0 +1,4 @@
+name: HybridBuildSystemPlugin
+main: net.hybrid.buildserver.BuildSystemPlugin
+version: 0.0.1
+load: STARTUP
