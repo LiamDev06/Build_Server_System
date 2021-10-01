@@ -24,13 +24,13 @@ public class FlyCommand extends PlayerCommand implements Listener {
     public void onPlayerCommand(Player player, String[] args) {
 
         if (flyingPlayers.contains(player.getUniqueId())) {
-            player.setAllowFlight(true);
+            player.setAllowFlight(false);
             player.setFlying(false);
 
             player.sendMessage(CC.translate("&b&lTurned off flight!"));
             flyingPlayers.remove(player.getUniqueId());
         } else {
-            player.setAllowFlight(true);
+            player.setAllowFlight(false);
             player.setFlying(true);
 
             player.sendMessage(CC.translate("&b&lTurned on flight!"));

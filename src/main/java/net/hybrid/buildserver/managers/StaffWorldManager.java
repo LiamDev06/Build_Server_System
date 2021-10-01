@@ -1,5 +1,6 @@
 package net.hybrid.buildserver.managers;
 
+import net.hybrid.buildserver.BuildSystemPlugin;
 import net.hybrid.core.utility.CC;
 import net.hybrid.core.utility.HybridPlayer;
 import net.hybrid.core.utility.SoundManager;
@@ -17,6 +18,7 @@ import org.bukkit.event.player.PlayerPortalEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
+import org.bukkit.scheduler.BukkitRunnable;
 
 public class StaffWorldManager implements Listener {
 
@@ -158,8 +160,6 @@ public class StaffWorldManager implements Listener {
         Player player = event.getPlayer();
         if (player.getWorld().getName().equalsIgnoreCase("staffhub")) return;
 
-        Bukkit.unloadWorld(event.getFrom(), true);
-
         player.getInventory().clear();
         player.setLevel(0);
         player.setExp(0);
@@ -175,6 +175,16 @@ public class StaffWorldManager implements Listener {
         player.getInventory().setChestplate(new ItemStack(Material.AIR));
         player.getInventory().setLeggings(new ItemStack(Material.AIR));
         player.getInventory().setBoots(new ItemStack(Material.AIR));
+
+        new BukkitRunnable(){
+            @Override
+            public void run() {
+                if (event.getFrom() != null){
+                    Bukkit.getServer().unloadWorld(event.getFrom(), true);
+                }
+            }
+        }.runTaskLater(BuildSystemPlugin.getInstance(), 10L);
+
     }
 
 }
