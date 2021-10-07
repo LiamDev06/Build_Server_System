@@ -1,33 +1,36 @@
 package net.hybrid.buildserver.commands;
 
 import net.hybrid.buildserver.BuildSystemPlugin;
-import net.hybrid.buildserver.menus.MapsMenu;
-import net.hybrid.core.data.Language;
 import net.hybrid.core.utility.HybridPlayer;
 import net.hybrid.core.utility.PlayerCommand;
 import net.hybrid.core.utility.SoundManager;
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.Sound;
+import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
-import org.bukkit.potion.PotionEffect;
 
-public class MapCommand extends PlayerCommand {
+import java.io.File;
+import java.io.IOException;
+import java.util.Objects;
 
-    public MapCommand() {
-        super("map", "world", "worlds", "maps");
+public class MapDeleteCommand extends PlayerCommand {
+
+    public MapDeleteCommand() {
+        super("deletemap", "mapdelete", "removemap");
     }
 
     @Override
     public void onPlayerCommand(Player player, String[] args) {
         HybridPlayer hybridPlayer = new HybridPlayer(player.getUniqueId());
         if (!hybridPlayer.getRankManager().isAdmin()) {
-            hybridPlayer.sendMessage(Language.get(player.getUniqueId(), "requires_admin"));
+            hybridPlayer.sendMessage("&cThis command can only be performed by an admin or above!");
+            return;
         }
 
         if (args.length == 0) {
-            SoundManager.playSound(player, Sound.CLICK);
-            player.openInventory(MapsMenu.getMapsMenu());
+            hybridPlayer.sendMessage("&cMissing arguments! Use /mapdelete <map> to specify which map to delete.");
             return;
         }
 
@@ -54,35 +57,46 @@ public class MapCommand extends PlayerCommand {
         }
 
         if (finalWorldName.equalsIgnoreCase(player.getWorld().getName())) {
-            hybridPlayer.sendMessage("&cYou are already in this map!");
+            hybridPlayer.sendMessage("&cYou are in this map which makes it un-deletable! Perform &6/map staffhub &cto leave!");
             return;
         }
 
-        Bukkit.createWorld(new WorldCreator(finalWorldName));
-
-        World world = Bukkit.getWorld(config.getString(finalWorldName + ".spawnLocation.world"));
-        int x = config.getInt(finalWorldName + ".spawnLocation.x");
-        int y = config.getInt(finalWorldName + ".spawnLocation.y");
-        int z = config.getInt(finalWorldName + ".spawnLocation.z");
-        int yaw = config.getInt(finalWorldName + ".spawnLocation.yaw");
-        int pitch = config.getInt(finalWorldName + ".spawnLocation.pitch");
-
-        Location spawn = new Location(world, x, y, z, yaw, pitch);
-        player.teleport(spawn);
-
-        SoundManager.playSound(player, Sound.NOTE_PLING);
-        hybridPlayer.sendMessage("&a&lMAP FOUND! &aThe map &e" + name.trim() + " &awas found, teleporting you there...");
-        player.setGameMode(GameMode.CREATIVE);
-        player.setFlying(true);
-        player.setAllowFlight(true);
-        player.getInventory().clear();
-
-        for (PotionEffect effect : player.getActivePotionEffects()) {
-            player.removePotionEffect(effect.getType());
+        config.set(finalWorldName, null);
+        try {
+            config.save(BuildSystemPlugin.getInstance().getMapsFile());
+        } catch (IOException exception) {
+            exception.printStackTrace();
         }
 
+        World targetDelete = Bukkit.getWorld(finalWorldName);
+        targetDelete.setAutoSave(false);
+
+        File deleteFolder = targetDelete.getWorldFolder();
+        deleteWorld(deleteFolder);
+
+        SoundManager.playSound(player, Sound.NOTE_PLING);
+        hybridPlayer.sendMessage("&a&lMAP DELETED! &aThe map &e" + name.trim() + " &ahas been deleted.");
+    }
+
+    public void deleteWorld(File path) {
+        if(path.exists()) {
+            File[] files = path.listFiles();
+
+            for (int i = 0; i< Objects.requireNonNull(files).length; i++) {
+                if (files[i].isDirectory()) {
+                    deleteWorld(files[i]);
+
+                } else {
+                    files[i].delete();
+                }
+            }
+        }
+
+        path.delete();
     }
 }
+
+
 
 
 

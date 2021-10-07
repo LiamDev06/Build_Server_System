@@ -30,7 +30,7 @@ public class FlyCommand extends PlayerCommand implements Listener {
             player.sendMessage(CC.translate("&b&lTurned off flight!"));
             flyingPlayers.remove(player.getUniqueId());
         } else {
-            player.setAllowFlight(false);
+            player.setAllowFlight(true);
             player.setFlying(true);
 
             player.sendMessage(CC.translate("&b&lTurned on flight!"));

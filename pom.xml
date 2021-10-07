@@ -36,6 +36,14 @@
             <version>1.8.8-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
+
+        <dependency>
+            <groupId>net.hybrid</groupId>
+            <artifactId>HybridCorePlugin</artifactId>
+            <version>0.0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/src/main/libs/HybridCorePlugin-0.0.1.jar</systemPath>
+        </dependency>
     </dependencies>
 
 </project>

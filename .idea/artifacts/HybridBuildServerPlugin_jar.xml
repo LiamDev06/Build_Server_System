@@ -1,5 +1,5 @@
 <component name="ArtifactManager">
-  <artifact type="jar" name="HybridBuildServerPlugin">
+  <artifact type="jar" name="HybridBuildServerPlugin:jar">
     <output-path>$PROJECT_DIR$/..</output-path>
     <root id="archive" name="HybridBuildServerPlugin.jar">
       <element id="module-output" name="HybridBuildServerPlugin" />
