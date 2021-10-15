@@ -34,8 +34,8 @@ public class StaffWorldManager implements Listener {
         Location spawn = new Location(Bukkit.getWorld("staffhub"), -26.5, 66, -9.5, -90, 0);
         player.teleport(spawn);
 
-        SoundManager.playSound(player, Sound.ENDERMAN_TELEPORT);
-        SoundManager.playSound(player, Sound.LEVEL_UP);
+        SoundManager.playSound(player, "ENDERMAN_TELEPORT");
+        SoundManager.playSound(player, "LEVEL_UP");
         player.sendMessage(CC.translate("&6Welcome to the Staff Hub, " + player.getName() + "!"));
 
         player.getInventory().clear();
@@ -53,13 +53,6 @@ public class StaffWorldManager implements Listener {
         player.getInventory().setChestplate(new ItemStack(Material.AIR));
         player.getInventory().setLeggings(new ItemStack(Material.AIR));
         player.getInventory().setBoots(new ItemStack(Material.AIR));
-
-        for (Player target : Bukkit.getWorld("staffhub").getPlayers()) {
-            target.sendMessage(CC.translate(
-                    hybridPlayer.getRankManager().getRank().getPrefixSpace() + player.getName()
-                    + " &ajoined the staff hub!"
-            ));
-        }
     }
 
     @EventHandler
@@ -130,8 +123,8 @@ public class StaffWorldManager implements Listener {
         Location spawn = new Location(Bukkit.getWorld("staffhub"), -26.5, 66, -9.5, -90, 0);
         player.teleport(spawn);
 
-        SoundManager.playSound(player, Sound.ENDERMAN_TELEPORT);
-        SoundManager.playSound(player, Sound.LEVEL_UP);
+        SoundManager.playSound(player, "ENDERMAN_TELEPORT");
+        SoundManager.playSound(player, "LEVEL_UP");
         player.sendMessage(CC.translate("&6Welcome to the Staff Hub, " + player.getName() + "!"));
 
         player.getInventory().clear();

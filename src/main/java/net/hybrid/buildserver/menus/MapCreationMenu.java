@@ -120,7 +120,7 @@ public class MapCreationMenu implements Listener {
             CreateMapCommand.hashWorldType.put(player.getUniqueId(), "void");
         }
 
-        SoundManager.playSound(player, Sound.CLICK);
+        SoundManager.playSound(player, "CLICK");
         player.sendMessage("§7Enter a valid map name...");
 
         AnvilGUI gui = new AnvilGUI(player, anvil -> {
@@ -205,18 +205,20 @@ public class MapCreationMenu implements Listener {
         } catch (IOException exception) { exception.printStackTrace(); }
 
         player.sendMessage(CC.translate("&a&lDONE! &aCreation of " + name.trim() + " has been completed. Teleporting..."));
-        SoundManager.playSound(player, Sound.LEVEL_UP);
+        SoundManager.playSound(player, "LEVEL_UP");
 
         new BukkitRunnable(){
             @Override
             public void run() {
                 World world = Bukkit.getWorld(name.replace(" ", "_").toLowerCase());
 
-                world.setMonsterSpawnLimit(0);
                 world.setDifficulty(Difficulty.PEACEFUL);
-                world.setStorm(false);
-                world.setWeatherDuration(0);
                 world.setThundering(false);
+                world.setStorm(false);
+                world.setMonsterSpawnLimit(0);
+                world.setWeatherDuration(0);
+                world.setTime(5000);
+                world.setGameRuleValue("doDaylightCycle", "false");
 
                 player.teleport(new Location(world, 0, 65, 0));
                 player.setGameMode(GameMode.CREATIVE);

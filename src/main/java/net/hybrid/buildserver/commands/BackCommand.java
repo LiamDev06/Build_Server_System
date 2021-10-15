@@ -21,7 +21,7 @@ public class BackCommand extends PlayerCommand {
         }
 
         player.sendMessage("§7Sending you to the staff hub...");
-        SoundManager.playSound(player, Sound.ENDERMAN_TELEPORT);
+        SoundManager.playSound(player, "ENDERMAN_TELEPORT");
 
         Location spawn = new Location(
                 Bukkit.getWorld("staffhub"),

@@ -35,7 +35,7 @@ public class SkullCommand extends PlayerCommand {
         }
 
         player.getInventory().addItem(ItemStackUtil.createPlayerSkull(name));
-        SoundManager.playSound(player, Sound.NOTE_PLING);
+        SoundManager.playSound(player, "NOTE_PLING");
         hybridPlayer.sendMessage("&a&lHEAD FOUND! &aA player head of &e" + name + " &awas added to your inventory.");
 
     }

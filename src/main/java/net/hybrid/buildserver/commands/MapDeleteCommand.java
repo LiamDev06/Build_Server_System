@@ -74,7 +74,7 @@ public class MapDeleteCommand extends PlayerCommand {
         File deleteFolder = targetDelete.getWorldFolder();
         deleteWorld(deleteFolder);
 
-        SoundManager.playSound(player, Sound.NOTE_PLING);
+        SoundManager.playSound(player, "NOTE_PLING");
         hybridPlayer.sendMessage("&a&lMAP DELETED! &aThe map &e" + name.trim() + " &ahas been deleted.");
     }
 

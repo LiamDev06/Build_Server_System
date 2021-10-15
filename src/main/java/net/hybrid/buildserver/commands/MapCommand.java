@@ -26,7 +26,7 @@ public class MapCommand extends PlayerCommand {
         }
 
         if (args.length == 0) {
-            SoundManager.playSound(player, Sound.CLICK);
+            SoundManager.playSound(player, "CLICK");
             player.openInventory(MapsMenu.getMapsMenu());
             return;
         }
@@ -61,6 +61,14 @@ public class MapCommand extends PlayerCommand {
         Bukkit.createWorld(new WorldCreator(finalWorldName));
 
         World world = Bukkit.getWorld(config.getString(finalWorldName + ".spawnLocation.world"));
+        world.setDifficulty(Difficulty.PEACEFUL);
+        world.setThundering(false);
+        world.setStorm(false);
+        world.setMonsterSpawnLimit(0);
+        world.setWeatherDuration(0);
+        world.setTime(5000);
+        world.setGameRuleValue("doDaylightCycle", "false");
+
         int x = config.getInt(finalWorldName + ".spawnLocation.x");
         int y = config.getInt(finalWorldName + ".spawnLocation.y");
         int z = config.getInt(finalWorldName + ".spawnLocation.z");
@@ -70,7 +78,7 @@ public class MapCommand extends PlayerCommand {
         Location spawn = new Location(world, x, y, z, yaw, pitch);
         player.teleport(spawn);
 
-        SoundManager.playSound(player, Sound.NOTE_PLING);
+        SoundManager.playSound(player, "NOTE_PLING");
         hybridPlayer.sendMessage("&a&lMAP FOUND! &aThe map &e" + name.trim() + " &awas found, teleporting you there...");
         player.setGameMode(GameMode.CREATIVE);
         player.setFlying(true);

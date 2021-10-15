@@ -52,7 +52,7 @@ public class SetSpawnCommand extends PlayerCommand {
 
         hybridPlayer.sendMessage("&a&lSPAWN UPDATED! &aA new spawn has been set at " +
                 "&e" + x + "&a, &e" + y + "&a, &e" + z + "&a.");
-        SoundManager.playSound(player, Sound.LEVEL_UP);
+        SoundManager.playSound(player, "LEVEL_UP");
     }
 }
 
