@@ -5,20 +5,22 @@ import net.hybrid.core.utility.CC;
 import net.hybrid.core.utility.HybridPlayer;
 import net.hybrid.core.utility.SoundManager;
 import org.bukkit.*;
+import org.bukkit.block.Chest;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockExplodeEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.EntityExplodeEvent;
-import org.bukkit.event.entity.FoodLevelChangeEvent;
+import org.bukkit.event.entity.*;
+import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerPortalEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.weather.WeatherChangeEvent;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -31,7 +33,14 @@ public class StaffWorldManager implements Listener {
 
         Player player = event.getPlayer();
         HybridPlayer hybridPlayer = new HybridPlayer(player.getUniqueId());
-        Location spawn = new Location(Bukkit.getWorld("staffhub"), -26.5, 66, -9.5, -90, 0);
+        Location spawn = new Location(
+                Bukkit.getWorld("staffhub"),
+                -36.5,
+                67,
+                -7.5,
+                -90,
+                0
+        );
         player.teleport(spawn);
 
         SoundManager.playSound(player, "ENDERMAN_TELEPORT");
@@ -120,7 +129,14 @@ public class StaffWorldManager implements Listener {
         if (!player.getWorld().getName().equalsIgnoreCase("staffhub")) return;
 
         HybridPlayer hybridPlayer = new HybridPlayer(player.getUniqueId());
-        Location spawn = new Location(Bukkit.getWorld("staffhub"), -26.5, 66, -9.5, -90, 0);
+        Location spawn = new Location(
+                Bukkit.getWorld("staffhub"),
+                -36.5,
+                67,
+                -7.5,
+                -90,
+                0
+        );
         player.teleport(spawn);
 
         SoundManager.playSound(player, "ENDERMAN_TELEPORT");
@@ -198,6 +214,41 @@ public class StaffWorldManager implements Listener {
         event.setCancelled(true);
     }
 
+    @EventHandler
+    public void onEntitySpawn(EntitySpawnEvent event) {
+        if (!(event instanceof Player)) event.setCancelled(true);
+    }
+
+    @EventHandler
+    public void onInteract(EntityInteractEvent event) {
+        if (event.getEntity() instanceof Player && event.getEntity().getWorld().getName().equals("staffhub")) {
+            Player player = (Player) event.getEntity();
+            if (!new HybridPlayer(player.getUniqueId()).getMetadataManager().isInBuildMode()) {
+                event.setCancelled(true);
+            }
+        }
+    }
+
+    @EventHandler
+    public void onInventoryClose(InventoryCloseEvent event) {
+        Inventory inv = event.getInventory();
+
+        if (inv.getType() == InventoryType.CHEST) {
+            Chest chest = (Chest) inv;
+            if (chest.getLocation().getWorld().getName().equals("staffhub") &&
+                chest.getLocation().getX() == -11 &&
+                chest.getLocation().getY() == 78 &&
+                chest.getLocation().getZ() == -12) {
+                inv.clear();
+
+                for (ItemStack i : inv.getContents()) {
+                    inv.remove(i);
+                }
+
+                chest.update(true);
+            }
+        }
+    }
 }
 
 

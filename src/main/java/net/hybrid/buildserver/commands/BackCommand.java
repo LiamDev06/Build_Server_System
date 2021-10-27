@@ -25,9 +25,9 @@ public class BackCommand extends PlayerCommand {
 
         Location spawn = new Location(
                 Bukkit.getWorld("staffhub"),
-                -26.5,
-                66,
-                -9.5,
+                -36.5,
+                67,
+                -7.5,
                 -90,
                 0
         );

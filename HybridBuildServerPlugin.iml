@@ -40,9 +40,9 @@
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.yaml:snakeyaml:1.15" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: net.md-5:bungeecord-chat:1.8-SNAPSHOT" level="project" />
     <orderEntry type="module-library">
-      <library name="Maven: net.hybrid:HybridCorePlugin:0.0.1">
+      <library name="Maven: net.hybrid:HybridCorePlugin:0.1.0">
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/src/main/libs/HybridCorePlugin-0.0.1.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/main/libs/HybridCorePlugin-0.1.0.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
