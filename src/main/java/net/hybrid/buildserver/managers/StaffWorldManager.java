@@ -228,27 +228,6 @@ public class StaffWorldManager implements Listener {
             }
         }
     }
-
-    @EventHandler
-    public void onInventoryClose(InventoryCloseEvent event) {
-        Inventory inv = event.getInventory();
-
-        if (inv.getType() == InventoryType.CHEST) {
-            Chest chest = (Chest) inv;
-            if (chest.getLocation().getWorld().getName().equals("staffhub") &&
-                chest.getLocation().getX() == -11 &&
-                chest.getLocation().getY() == 78 &&
-                chest.getLocation().getZ() == -12) {
-                inv.clear();
-
-                for (ItemStack i : inv.getContents()) {
-                    inv.remove(i);
-                }
-
-                chest.update(true);
-            }
-        }
-    }
 }
 
 
