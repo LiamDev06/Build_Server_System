@@ -23,6 +23,7 @@ public class MapCommand extends PlayerCommand {
         HybridPlayer hybridPlayer = new HybridPlayer(player.getUniqueId());
         if (!hybridPlayer.getRankManager().isAdmin()) {
             hybridPlayer.sendMessage(Language.get(player.getUniqueId(), "requires_admin"));
+            return;
         }
 
         if (args.length == 0) {
